@@ -1,11 +1,16 @@
 package com.can.PatikaFinalCreditProject.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table
 public class Customer
@@ -15,15 +20,19 @@ public class Customer
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
+    @NonNull
     @Column(name = "firts_name")
     private String firstName;
 
+    @NonNull
     @Column(name = "last_name")
     private String lastName;
 
+    @NonNull
     @Column(name = "telephone_number")
     private String telephonNumber;
 
+    @NonNull
     @Column(name = "birthdate")
     private LocalDate birthDate;
 
