@@ -10,5 +10,5 @@ import java.util.List;
 public interface LoanApplicationRepository extends JpaRepository<LoanApplication,Long> {
 
 
-    List<LoanApplication> findsByLoanApplicationByCustomerId(Long customerId);
+    List<LoanApplication> findAllByCustomer_CustomerId(Long customerId);
 }

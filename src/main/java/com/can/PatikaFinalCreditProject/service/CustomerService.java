@@ -1,17 +1,19 @@
 package com.can.PatikaFinalCreditProject.service;
 
+import com.can.PatikaFinalCreditProject.dto.RequestDto.CustomerRequestDto;
+import com.can.PatikaFinalCreditProject.dto.ResponseDto.CustomerResponseDto;
 import com.can.PatikaFinalCreditProject.entity.Customer;
 
 import java.util.List;
 
 public interface CustomerService
 {
-    List<Customer> getAll();
+    List<CustomerResponseDto> getAll();
 
-    Customer get(Long id);
+    CustomerResponseDto get(Long id);
 
-    Customer save(Customer customer);
+    CustomerResponseDto save(CustomerRequestDto customer);
 
-    Customer delete(Customer customer);
+    CustomerResponseDto delete(CustomerRequestDto customer);
 
 }

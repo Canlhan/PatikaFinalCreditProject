@@ -20,6 +20,8 @@ public class Customer
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
+    @Column(name = "identify_no",unique = true)
+    private String identifyNo;
     @NonNull
     @Column(name = "firts_name")
     private String firstName;
