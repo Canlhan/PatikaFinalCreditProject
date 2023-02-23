@@ -19,7 +19,7 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
     @Override
     public List<LoanApplication> getLoanApplicationByCustomerId(Long customerId) {
-        List<LoanApplication> loanApplicationsByCustomerId=loanApplicationRepository.findsByLoanApplicationByCustomerId(customerId);
+        List<LoanApplication> loanApplicationsByCustomerId=loanApplicationRepository.findAllByCustomer_CustomerId(customerId);
         log.info("loan application by customer id: "+loanApplicationsByCustomerId);
         return loanApplicationsByCustomerId;
     }
