@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Slf4j
@@ -25,12 +24,14 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
     private final Long TWENTY_THOUSAND=20_000L;
     private final int CREDIT_LIMIT_MULTIPLIER=4;
 
+    private final NotificationsService smsService;
     private final ModelMapper modelMapper;
 
-    public LoanApplicationServiceImpl(LoanApplicationRepository loanApplicationRepository, CreditScoreService creditScoreService, CustomerService customerService, ModelMapper modelMapper) {
+    public LoanApplicationServiceImpl(LoanApplicationRepository loanApplicationRepository, CreditScoreService creditScoreService, CustomerService customerService, SmsService smsService, ModelMapper modelMapper) {
         this.loanApplicationRepository = loanApplicationRepository;
         this.creditScoreService = creditScoreService;
         this.customerService = customerService;
+        this.smsService = smsService;
         this.modelMapper = modelMapper;
     }
 
@@ -65,6 +66,7 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
 
         customerService.update(customer);
+       smsService.sendNotifications(customer);
         return loanApplicationResponse;
     }
 
