@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +88,12 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
 
         return loanApplicationResponses;
+    }
+
+    @Override
+    public List<LoanApplicationResponse> getLoanApplicationsByIdentifyAndBirhdate(String identifyNo, LocalDate localDate) {
+
+        return null;
     }
 
 
