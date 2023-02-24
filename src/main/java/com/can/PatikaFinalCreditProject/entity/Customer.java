@@ -1,5 +1,8 @@
 package com.can.PatikaFinalCreditProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +16,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table
+
 public class Customer
 {
 
@@ -51,6 +55,7 @@ public class Customer
 
 
     @OneToMany(mappedBy = "customer")
-    private Set<LoanApplication> loanApplications;
+    @JsonBackReference
+    private List<LoanApplication> loanApplications;
 
 }

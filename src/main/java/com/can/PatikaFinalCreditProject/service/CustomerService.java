@@ -16,6 +16,7 @@ public interface CustomerService
 
     CustomerResponseDto delete(CustomerRequestDto customer);
 
+    CustomerResponseDto update(Customer customer);
     boolean isSalaryBetween500And1000(Long id);
     boolean isSalaryOverLimit(Long id,Long limit);
 

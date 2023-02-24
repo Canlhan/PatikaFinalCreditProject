@@ -2,10 +2,12 @@ package com.can.PatikaFinalCreditProject.dto.ResponseDto;
 
 import com.can.PatikaFinalCreditProject.entity.CreditScore;
 import com.can.PatikaFinalCreditProject.entity.LoanApplication;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,7 +20,7 @@ public class CustomerResponseDto
 
     private Long customerId;
 
-
+    private String identifyNo;
     private String firstName;
 
 
@@ -38,5 +40,6 @@ public class CustomerResponseDto
 
 
 
-    private Set<LoanApplication> loanApplications;
+
+    private List<LoanApplication> loanApplications;
 }
