@@ -1,7 +1,13 @@
 package com.can.PatikaFinalCreditProject.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class LoanApplication
 {
@@ -17,5 +23,9 @@ public class LoanApplication
     private Customer customer;
 
     @Column(name = "is_approval")
-    private Boolean isApproval;
+    private boolean isApproval;
+
+    @Column(name = "credit_limit")
+    private Long creditLimit;
+
 }

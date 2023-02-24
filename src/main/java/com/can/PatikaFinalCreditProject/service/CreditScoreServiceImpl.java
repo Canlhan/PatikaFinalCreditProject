@@ -25,4 +25,23 @@ public class CreditScoreServiceImpl implements CreditScoreService{
 
         return creditScoreRepository.save(creditScore);
     }
+
+
+    @Override
+    public boolean isCreditScoreLessThanLimit(CreditScore score, Long limit) {
+
+        if(score.getCreditScore()<limit){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isCreditScoreMoreThanLimit(CreditScore score, Long limit) {
+
+        if(score.getCreditScore()>limit){
+            return true;
+        }
+        return false;
+    }
 }

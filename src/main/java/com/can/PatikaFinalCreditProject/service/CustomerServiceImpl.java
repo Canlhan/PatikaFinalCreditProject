@@ -64,6 +64,26 @@ public class CustomerServiceImpl implements CustomerService{
         return customerResponseDto ;
     }
 
+    @Override
+    public boolean isSalaryBetween500And1000(Long id) {
+        CustomerResponseDto customer=get(id);
+        long salary=customer.getSalary();
+        if(salary>5000 && salary<10000){
+
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isSalaryOverLimit(Long id, Long limit) {
+        CustomerResponseDto customerResponseDto=get(id);
+        if(customerResponseDto.getSalary()>=limit){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * This method convert Customer object to CustomerResponse Object
      * @param customer

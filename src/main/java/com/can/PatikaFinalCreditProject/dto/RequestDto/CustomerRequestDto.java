@@ -27,7 +27,7 @@ public class CustomerRequestDto
 
 
     private LocalDate birthDate;
-
+    private Long salary;
 
     private Long quarantee;
 

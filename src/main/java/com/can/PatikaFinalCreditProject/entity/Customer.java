@@ -39,7 +39,11 @@ public class Customer
     private LocalDate birthDate;
 
     @Column(name = "quarantee")
-    private Long quarantee;
+
+    private Long quarantee= 0l;
+
+    @Column(name = "salary")
+    private Long salary;
 
     @OneToOne
     @JoinColumn(name = "credit_id",referencedColumnName = "creditId")
