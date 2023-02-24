@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -60,6 +61,10 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         LoanApplication addedLoanApplication=loanApplicationRepository.save(loanApplication);
         LoanApplicationResponse loanApplicationResponse=modelMapper.map(addedLoanApplication,LoanApplicationResponse.class);
 
+        customer.setLoanApplications(List.of(loanApplication));
+
+
+        customerService.update(customer);
         return loanApplicationResponse;
     }
 
@@ -140,7 +145,7 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         {
             loanApplication.setApproval(true);
             loanApplication.setCustomer(customer);
-            long amountOfCreditLimit=(customer.getSalary()*CREDIT_LIMIT_MULTIPLIER)/100;
+            long amountOfCreditLimit=(customer.getSalary()*CREDIT_LIMIT_MULTIPLIER)/2;
             if(customer.getQuarantee()!=0){
                 long ratioOfGuarantee=(customer.getQuarantee()*25)/100;
                 loanApplication.setCreditLimit(amountOfCreditLimit+ratioOfGuarantee);

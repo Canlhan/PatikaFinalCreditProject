@@ -28,7 +28,7 @@ public class LoanApplicationController
 
     }
 
-    @PostMapping("/")
+    @PostMapping(path = "/",consumes = "application/json;charset=UTF-8")
     public ResponseEntity<LoanApplicationResponse> save(@RequestBody LoanApplicationRequest loanApplicationRequest){
 
         LoanApplicationResponse loanApplicationResponse=loanApplicationService.save(loanApplicationRequest);

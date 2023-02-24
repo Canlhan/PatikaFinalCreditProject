@@ -2,6 +2,7 @@ package com.can.PatikaFinalCreditProject.service;
 
 import com.can.PatikaFinalCreditProject.dto.RequestDto.CustomerRequestDto;
 import com.can.PatikaFinalCreditProject.dto.ResponseDto.CustomerResponseDto;
+import com.can.PatikaFinalCreditProject.entity.CreditScore;
 import com.can.PatikaFinalCreditProject.entity.Customer;
 import com.can.PatikaFinalCreditProject.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +19,14 @@ public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerRepository customerRepository;
 
+    private final CreditScoreService creditScoreService;
+
     @Autowired
     private ModelMapper modelMapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CreditScoreService creditScoreService) {
         this.customerRepository = customerRepository;
+        this.creditScoreService = creditScoreService;
     }
 
     @Override
@@ -47,10 +51,13 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public CustomerResponseDto save(CustomerRequestDto customer) {
 
-        Customer customerAdded=customerRepository.save(modelMapper.map(customer,Customer.class));
-        log.info("customer added: "+customerAdded);
+        CreditScore score=creditScoreService.save(CreditScore.builder().creditScore(501l).build());
+        Customer addCustomer=modelMapper.map(customer,Customer.class);
+        addCustomer.setCreditScore(score);
+        Customer customerAdded=customerRepository.save(addCustomer);
+
         CustomerResponseDto customerResponseDto=modelMapper.map(customerAdded,CustomerResponseDto.class);
-        log.info("customer responde dto "+customerResponseDto);
+
         return customerResponseDto;
     }
 
@@ -62,6 +69,15 @@ public class CustomerServiceImpl implements CustomerService{
         CustomerResponseDto customerResponseDto=modelMapper.map(deletedCustomer,CustomerResponseDto.class);
 
         return customerResponseDto ;
+    }
+
+    @Override
+    public CustomerResponseDto update(Customer customer) {
+
+        customerRepository.save(customer);
+
+        CustomerResponseDto customerResponseDto=modelMapper.map(customer,CustomerResponseDto.class);
+        return customerResponseDto;
     }
 
     @Override
