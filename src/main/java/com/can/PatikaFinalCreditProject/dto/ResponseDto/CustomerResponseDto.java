@@ -26,7 +26,7 @@ public class CustomerResponseDto
 
 
     private String telephonNumber;
-
+    private Long salary;
 
     private LocalDate birthDate;
 
