@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,28 +26,30 @@ public class Customer
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
+    @NonNull
     @Column(name = "identify_no",unique = true)
+    @Pattern(regexp = "^\\d{11}$")
     private String identifyNo;
     @NonNull
     @Column(name = "firts_name")
     private String firstName;
 
-    @NonNull
+    @NotEmpty
     @Column(name = "last_name")
     private String lastName;
-
-    @NonNull
+    @NotEmpty
     @Column(name = "telephone_number")
+    @Pattern(regexp = "^\\d{10}$")
     private String telephonNumber;
 
-    @NonNull
+    @NotEmpty
     @Column(name = "birthdate")
     private LocalDate birthDate;
 
     @Column(name = "quarantee")
-
     private Long quarantee= 0l;
 
+    @NotEmpty
     @Column(name = "salary")
     private Long salary;
 

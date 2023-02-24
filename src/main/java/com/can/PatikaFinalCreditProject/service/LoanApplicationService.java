@@ -5,6 +5,7 @@ import com.can.PatikaFinalCreditProject.dto.ResponseDto.LoanApplicationResponse;
 import com.can.PatikaFinalCreditProject.entity.Customer;
 import com.can.PatikaFinalCreditProject.entity.LoanApplication;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface LoanApplicationService
@@ -17,4 +18,6 @@ public interface LoanApplicationService
     LoanApplicationResponse get(Long id);
 
     List<LoanApplicationResponse> getAll();
+
+    List<LoanApplicationResponse> getLoanApplicationsByIdentifyAndBirhdate(String identifyNo, LocalDate localDate);
 }
