@@ -8,7 +8,6 @@ import com.can.PatikaFinalCreditProject.entity.LoanApplication;
 import com.can.PatikaFinalCreditProject.repository.LoanApplicationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,13 +23,14 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
     private final Long TWENTY_THOUSAND=20_000L;
     private final int CREDIT_LIMIT_MULTIPLIER=4;
-    @Autowired
-    private ModelMapper modelMapper;
 
-    public LoanApplicationServiceImpl(LoanApplicationRepository loanApplicationRepository, CreditScoreService creditScoreService, CustomerService customerService) {
+    private final ModelMapper modelMapper;
+
+    public LoanApplicationServiceImpl(LoanApplicationRepository loanApplicationRepository, CreditScoreService creditScoreService, CustomerService customerService, ModelMapper modelMapper) {
         this.loanApplicationRepository = loanApplicationRepository;
         this.creditScoreService = creditScoreService;
         this.customerService = customerService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -87,8 +87,6 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
         if(creditScoreService.isCreditScoreLessThanLimit(score,500l)){
             loanApplication.setApproval(false);
-            loanApplication.setCustomer(customer);
-
         }
 
     }
@@ -98,15 +96,15 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
         if (isCreditValid && customer.getSalary()<5000 ) {
             loanApplication.setApproval(true);
-            loanApplication.setCustomer(customer);
+
             long quarantee=customer.getQuarantee();
             if(quarantee!=0){
                 Long addedAmount=(quarantee*10)/100;
                 Long creditAmount=addedAmount+10_000;
-                loanApplication.setLimit(creditAmount);
+                loanApplication.setCreditLimit(creditAmount);
             }
             else{
-                loanApplication.setLimit(10_000);
+                loanApplication.setCreditLimit(10_000l);
             }
 
         }
@@ -121,13 +119,12 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         if (isCreditValid &&customerService.isSalaryBetween500And1000(customer.getCustomerId())  ) {
 
             loanApplication.setApproval(true);
-            loanApplication.setCustomer(customer);
             if(customer.getQuarantee()!=0){
                 long amountOfGuarantee= (customer.getQuarantee()*20)/100+TWENTY_THOUSAND;
-                loanApplication.setLimit(amountOfGuarantee);
+                loanApplication.setCreditLimit(amountOfGuarantee);
             }
             else{
-                loanApplication.setLimit(TWENTY_THOUSAND);
+                loanApplication.setCreditLimit(TWENTY_THOUSAND);
             }
 
         }
@@ -146,11 +143,10 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
             long amountOfCreditLimit=(customer.getSalary()*CREDIT_LIMIT_MULTIPLIER)/100;
             if(customer.getQuarantee()!=0){
                 long ratioOfGuarantee=(customer.getQuarantee()*25)/100;
-
-                loanApplication.setLimit(amountOfCreditLimit+ratioOfGuarantee);
+                loanApplication.setCreditLimit(amountOfCreditLimit+ratioOfGuarantee);
             }
             else{
-                loanApplication.setLimit(amountOfCreditLimit);
+                loanApplication.setCreditLimit(amountOfCreditLimit);
             }
         }
     }
@@ -159,15 +155,14 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         boolean isCreditMore1_000=creditScoreService.isCreditScoreMoreThanLimit(creditScore,999l);
         if(isCreditMore1_000){
             loanApplication.setApproval(true);
-            loanApplication.setCustomer(customer);
             long limitOfCreditLimit=customer.getSalary()*CREDIT_LIMIT_MULTIPLIER;
 
             if(customer.getQuarantee()!=0){
                 long ratioOfGuarantee=customer.getQuarantee()*50/100;
 
-                loanApplication.setLimit(limitOfCreditLimit+ratioOfGuarantee);
+                loanApplication.setCreditLimit(limitOfCreditLimit+ratioOfGuarantee);
             }else{
-                loanApplication.setLimit(limitOfCreditLimit);
+                loanApplication.setCreditLimit(limitOfCreditLimit);
             }
         }
     }

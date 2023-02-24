@@ -25,7 +25,7 @@ public class LoanApplication
     @Column(name = "is_approval")
     private boolean isApproval;
 
-    @Column(name = "limit")
-    private long limit;
+    @Column(name = "credit_limit")
+    private Long creditLimit;
 
 }
