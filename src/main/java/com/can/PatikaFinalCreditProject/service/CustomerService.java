@@ -20,4 +20,6 @@ public interface CustomerService
     boolean isSalaryBetween500And1000(Long id);
     boolean isSalaryOverLimit(Long id,Long limit);
 
+
+
 }

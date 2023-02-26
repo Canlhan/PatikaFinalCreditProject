@@ -26,30 +26,33 @@ public class Customer
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
-    @NonNull
+
     @Column(name = "identify_no",unique = true)
     @Pattern(regexp = "^\\d{11}$")
-    private String identifyNo;
     @NonNull
+    private String identifyNo;
+
     @Column(name = "firts_name")
     private String firstName;
 
-    @NotEmpty
+
     @Column(name = "last_name")
     private String lastName;
-    @NotEmpty
+
+
+
     @Column(name = "telephone_number")
     @Pattern(regexp = "^\\d{10}$")
     private String telephonNumber;
 
-    @NotEmpty
+
     @Column(name = "birthdate")
     private LocalDate birthDate;
 
     @Column(name = "quarantee")
     private Long quarantee= 0l;
 
-    @NotEmpty
+
     @Column(name = "salary")
     private Long salary;
 
