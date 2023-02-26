@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -40,8 +41,7 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
     public List<LoanApplicationResponse> getLoanApplicationByCustomerId(Long customerId) {
         List<LoanApplicationResponse> loanApplicationsByCustomerId=new ArrayList<>();
 
-        loanApplicationRepository.findAllByCustomer_CustomerId(customerId)
-                        .stream().forEach(loanApplication ->
+        loanApplicationRepository.findAllByCustomer_CustomerId(customerId).forEach(loanApplication ->
                         loanApplicationsByCustomerId.add(modelMapper.map(loanApplication,LoanApplicationResponse.class)));
         log.info("loan application by customer id: "+loanApplicationsByCustomerId);
         return loanApplicationsByCustomerId;
@@ -78,22 +78,34 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         return loanApplicationResponse;
     }
 
+
+
+
+
     @Override
     public List<LoanApplicationResponse> getAll() {
 
         List<LoanApplicationResponse> loanApplicationResponses=new ArrayList<>();
 
-        loanApplicationRepository.findAll().stream()
-                .forEach(loanApplication -> loanApplicationResponses.add(modelMapper.map(loanApplication,LoanApplicationResponse.class)));
+        loanApplicationRepository.findAll().forEach(loanApplication ->
+                loanApplicationResponses.add(modelMapper.map(loanApplication,LoanApplicationResponse.class))
+        );
 
 
         return loanApplicationResponses;
     }
 
+
+
     @Override
     public List<LoanApplicationResponse> getLoanApplicationsByIdentifyAndBirhdate(String identifyNo, LocalDate localDate) {
+        List<LoanApplicationResponse> loanApplicationResponses=new ArrayList<>();
 
-        return null;
+        List<LoanApplication> loanApplications=loanApplicationRepository.findAllByCustomer_IdentifyNoAndCustomer_BirthDate(identifyNo,localDate);
+
+        loanApplications.forEach(loanApplication -> loanApplicationResponses.add(modelMapper.map(loanApplication,LoanApplicationResponse.class)));
+
+        return  loanApplicationResponses;
     }
 
 
