@@ -73,21 +73,30 @@ public class LoanApplicationServiceImplTest {
 
     @Test
     public void testSave() {
-//        CreditScore score=CreditScore.builder().creditId(1L).creditScore(501l).build();
-//        Customer customer=Customer.builder()
-//                .customerId(1L).birthDate(LocalDate.of(2022,3,12))
-//                .quarantee(1000L).creditScore(score).firstName("test-name").identifyNo("23434543454").build();
-//
-//        LoanApplicationRequest loanApplicationRequest=LoanApplicationRequest.builder().customer(customer).build();
-//
-//
-//        LoanApplication loanApplication=LoanApplication.builder()
-//                .loanId(1L).customer(customer).build();
-//
-//
-//        when(loanApplicationRequest.getCustomer()).thenReturn(customer);
-//        when(modelMapper.map(loanApplicationRequest,LoanApplication.class)).thenReturn(loanApplication);
-//
+        CreditScore score=CreditScore.builder().creditId(1L).creditScore(51l).build();
+        Customer customer=Customer.builder()
+                .customerId(1L).birthDate(LocalDate.of(2022,3,12))
+                .quarantee(1000L).creditScore(score).firstName("test-name").identifyNo("23434543454").build();
+
+        LoanApplicationRequest loanApplicationRequest=LoanApplicationRequest.builder().customer(customer).build();
+
+
+        LoanApplication loanApplication=LoanApplication.builder()
+                .loanId(1L).customer(customer).build();
+
+        LoanApplicationResponse loanApplicationResponse=LoanApplicationResponse.builder()
+                .isApproval(true).limit(10000l).build();
+
+        //when(loanApplicationRequest.getCustomer()).thenReturn(customer);
+        when(modelMapper.map(loanApplicationRequest,LoanApplication.class)).thenReturn(loanApplication);
+       // when(customer.getCreditScore()).thenReturn(score);
+
+        when(loanApplicationRepository.save(loanApplication)).thenReturn(loanApplication);
+        when(modelMapper.map(loanApplication,LoanApplicationResponse.class)).thenReturn(loanApplicationResponse);
+
+
+        assertEquals(loanApplicationService.save(loanApplicationRequest),loanApplicationResponse);
+
 
 
     }
