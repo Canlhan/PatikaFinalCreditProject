@@ -1,17 +1,16 @@
 package com.can.PatikaFinalCreditProject.dto.ResponseDto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class LoanApplicationResponse
 {
 
+    private Long loanId;
     private boolean isApproval;
     private Long limit;
 }
