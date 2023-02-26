@@ -26,10 +26,10 @@ public class SmsServiceImpl implements SmsService<Object>{
 
 
         try {
-            String telephoneOfCustomer="+905064600220";
+            String telephoneOfCustomer="+905070288850";
             Message.creator(new PhoneNumber(telephoneOfCustomer),
-                    new PhoneNumber("+12765799601"), "Dolandırılmak mı istiyorsunuz? bu mesajı 15 kişiyle paylaşın " +
-                            "dolandırılmanız sizin olsun  "
+                    new PhoneNumber("+12765799601"), "Sayın Emircan Furkan Bayendur, adınıza 20.000TL krediniz onaylanmıştır " +
+                            "B002 B016"
             ).create();
         }catch (Exception e){
             return "There are a exception while sending notifications";

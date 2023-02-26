@@ -1,9 +1,11 @@
 package com.can.PatikaFinalCreditProject.api;
 
+import com.can.PatikaFinalCreditProject.Exception.ParameterException;
 import com.can.PatikaFinalCreditProject.dto.RequestDto.CustomerRequestDto;
 import com.can.PatikaFinalCreditProject.dto.ResponseDto.CustomerResponseDto;
 import com.can.PatikaFinalCreditProject.service.CustomerService;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +35,8 @@ public class CustomerController
     }
 
     @PostMapping("/")
-    public ResponseEntity<CustomerResponseDto> addCustomer(@RequestBody CustomerRequestDto customerRequestDto){
+    public ResponseEntity<CustomerResponseDto> addCustomer(@Valid @RequestBody CustomerRequestDto customerRequestDto)
+    throws ParameterException {
 
 
         CustomerResponseDto customerResponseDto=customerService.save(customerRequestDto);

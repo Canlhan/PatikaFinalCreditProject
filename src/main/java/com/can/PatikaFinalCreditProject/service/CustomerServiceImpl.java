@@ -7,11 +7,11 @@ import com.can.PatikaFinalCreditProject.entity.Customer;
 import com.can.PatikaFinalCreditProject.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Slf4j
@@ -21,12 +21,13 @@ public class CustomerServiceImpl implements CustomerService{
 
     private final CreditScoreService creditScoreService;
 
-    @Autowired
-    private ModelMapper modelMapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, CreditScoreService creditScoreService) {
+    private final ModelMapper modelMapper;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, CreditScoreService creditScoreService, ModelMapper modelMapper) {
         this.customerRepository = customerRepository;
         this.creditScoreService = creditScoreService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -51,7 +52,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public CustomerResponseDto save(CustomerRequestDto customer) {
 
-        CreditScore score=creditScoreService.save(CreditScore.builder().creditScore(501l).build());
+        Random random =new Random();
+        long creditScore=random.nextLong(1001);
+
+        CreditScore score=creditScoreService.save(CreditScore.builder().creditScore(creditScore).build());
         Customer addCustomer=modelMapper.map(customer,Customer.class);
         addCustomer.setCreditScore(score);
         Customer customerAdded=customerRepository.save(addCustomer);
@@ -100,25 +104,5 @@ public class CustomerServiceImpl implements CustomerService{
         return false;
     }
 
-    /**
-     * This method convert Customer object to CustomerResponse Object
-     * @param customer
-     * @return List of CustomerResponse objects
-     */
-    private CustomerResponseDto convertCustomerToDto(Customer customer){
-            CustomerResponseDto customerResponseDto=CustomerResponseDto.builder()
-                    .customerId(customer.getCustomerId())
-                    .quarantee(customer.getQuarantee())
-                    .creditScore(customer.getCreditScore())
-                    .birthDate(customer.getBirthDate())
-                    .loanApplications(customer.getLoanApplications())
-                    .build();
 
-
-        return customerResponseDto;
-    }
-
-    private CustomerRequestDto convertCustomerToCustomerRequest(){
-        return null;
-    }
 }

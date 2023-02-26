@@ -11,6 +11,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 public class CustomerRequestDto
 {
