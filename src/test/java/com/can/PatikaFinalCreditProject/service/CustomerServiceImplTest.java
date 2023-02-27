@@ -52,10 +52,10 @@ public class CustomerServiceImplTest {
 
         Customer customer=Customer.builder()
                 .customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
         CustomerResponseDto customerResponseDto=CustomerResponseDto.builder().customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
         when(customerRepository.findAll()).thenReturn(List.of(customer));
         when(modelMapper.map(customer,CustomerResponseDto.class)).thenReturn(customerResponseDto);
@@ -76,10 +76,10 @@ public class CustomerServiceImplTest {
 
         Customer customer=Customer.builder()
                 .customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
         CustomerResponseDto customerResponseDto=CustomerResponseDto.builder().customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
         when(customerRepository.findById(customer.getCustomerId())).thenReturn(Optional.of(customer));
 
         when(modelMapper.map(customer,CustomerResponseDto.class)).thenReturn(customerResponseDto);
@@ -95,15 +95,15 @@ public class CustomerServiceImplTest {
         CreditScore score=CreditScore.builder().creditScore(500l).creditId(1L).build();
         Customer customer=Customer.builder()
                 .customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).creditScore(score).firstName("test-name").build();
+                .guarantee(1000L).creditScore(score).firstName("test-name").build();
 
 
         CustomerRequestDto customerRequestDto= CustomerRequestDto.builder()
                 .birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
         CustomerResponseDto customerResponseDto=CustomerResponseDto.builder().customerId(12L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
        //when
         when(creditScoreService.save(score)).thenReturn(score);
@@ -125,16 +125,16 @@ public class CustomerServiceImplTest {
         CustomerRequestDto customerRequestDto= CustomerRequestDto.builder()
                 .birthDate(LocalDate.of(2022,3,12))
                 .identifyNo("34543135456")
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
 
         Customer customer=Customer.builder()
                 .customerId(1L).birthDate(LocalDate.of(2022,3,12))
                 .identifyNo("34543135456")
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
         CustomerResponseDto customerResponseDto=CustomerResponseDto.builder().customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
+                .guarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
 
         when(customerRepository.findCustomerByIdentifyNo(customerRequestDto.getIdentifyNo())).thenReturn(customer);
        customerRepository.delete(customer);
@@ -153,9 +153,9 @@ public class CustomerServiceImplTest {
         Customer customer=Customer.builder()
                 .customerId(1L).birthDate(LocalDate.of(2022,3,12))
                 .identifyNo("34543135456")
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
         CustomerResponseDto customerResponseDto=CustomerResponseDto.builder().customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
+                .guarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
 
 
         when(customerRepository.save(customer)).thenReturn(customer);
@@ -168,12 +168,12 @@ public class CustomerServiceImplTest {
     public void testIsSalaryBetween500And1000(){
         CustomerResponseDto customerResponseDto=CustomerResponseDto.builder()
                 .salary(6000l).customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
+                .guarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
 
         Customer customer=Customer.builder()
                 .customerId(1L).birthDate(LocalDate.of(2022,3,12))
                 .identifyNo("34543135456")
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
         when(modelMapper.map(customer,CustomerResponseDto.class)).thenReturn(customerResponseDto);
@@ -187,12 +187,12 @@ public class CustomerServiceImplTest {
     public void testIsNotSalaryBetween500And1000(){
         CustomerResponseDto customerResponseDto=CustomerResponseDto.builder()
                 .salary(3000l).customerId(1L).birthDate(LocalDate.of(2022,3,12))
-                .quarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
+                .guarantee(1000L).identifyNo("34543535456").firstName("test-name").build();
 
         Customer customer=Customer.builder()
                 .customerId(1L).birthDate(LocalDate.of(2022,3,12))
                 .identifyNo("34543135456")
-                .quarantee(1000L).firstName("test-name").build();
+                .guarantee(1000L).firstName("test-name").build();
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
         when(modelMapper.map(customer,CustomerResponseDto.class)).thenReturn(customerResponseDto);

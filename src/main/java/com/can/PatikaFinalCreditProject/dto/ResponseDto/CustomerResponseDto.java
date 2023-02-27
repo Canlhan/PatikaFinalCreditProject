@@ -33,7 +33,7 @@ public class CustomerResponseDto
     private LocalDate birthDate;
 
 
-    private Long quarantee;
+    private Long guarantee;
 
 
     private CreditScore creditScore;

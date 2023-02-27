@@ -49,8 +49,8 @@ public class Customer
     @Column(name = "birthdate")
     private LocalDate birthDate;
 
-    @Column(name = "quarantee")
-    private Long quarantee= 0l;
+    @Column(name = "guarantee")
+    private Long guarantee;
 
 
     @Column(name = "salary")

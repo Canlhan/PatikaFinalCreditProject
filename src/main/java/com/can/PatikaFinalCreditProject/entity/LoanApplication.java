@@ -11,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@ToString
 @Builder
 public class LoanApplication
 {
@@ -32,6 +31,6 @@ public class LoanApplication
     private boolean isApproval;
 
     @Column(name = "credit_limit")
-    private Long creditLimit;
+    private Long creditLimit=0l;
 
 }

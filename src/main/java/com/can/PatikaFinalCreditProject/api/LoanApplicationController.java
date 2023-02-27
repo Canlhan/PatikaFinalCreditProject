@@ -7,8 +7,10 @@ import com.can.PatikaFinalCreditProject.service.LoanApplicationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/loan")
 public class LoanApplicationController
@@ -28,12 +30,37 @@ public class LoanApplicationController
 
     }
 
-    @PostMapping(path = "/",consumes = "application/json;charset=UTF-8")
+    @PostMapping(path = "/")
     public ResponseEntity<LoanApplicationResponse> save(@RequestBody LoanApplicationRequest loanApplicationRequest){
 
         LoanApplicationResponse loanApplicationResponse=loanApplicationService.save(loanApplicationRequest);
 
         return ResponseEntity.ok(loanApplicationResponse);
+
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<List<LoanApplicationResponse>> getLoanApplicationOfCustomer(@PathVariable Long id){
+
+        List<LoanApplicationResponse> loanApplicationResponses=loanApplicationService.getLoanApplicationByCustomerId(id);
+
+        return ResponseEntity.ok(loanApplicationResponses);
+
+    }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<LoanApplicationResponse> getLoanApplication(@PathVariable Long id){
+
+        LoanApplicationResponse loanApplicationResponses=loanApplicationService.get(id);
+
+        return ResponseEntity.ok(loanApplicationResponses);
+
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity< List<LoanApplicationResponse>> getLoanApplicationsDate(@RequestParam String identifyNo, @RequestParam LocalDate localDate){
+
+        List<LoanApplicationResponse> loanApplicationResponses=loanApplicationService.getLoanApplicationsByIdentifyAndBirhdate(identifyNo,localDate);
+
+        return ResponseEntity.ok(loanApplicationResponses);
 
     }
 }

@@ -55,6 +55,9 @@ public class CustomerServiceImpl implements CustomerService{
         Random random =new Random();
         long creditScore=random.nextLong(1001);
 
+//        if(customer.getGuarantee()==null){
+//            customer.setGuarantee(0L);
+//        }
         CreditScore score=creditScoreService.save(CreditScore.builder().creditScore(creditScore).build());
         Customer addCustomer=modelMapper.map(customer,Customer.class);
         addCustomer.setCreditScore(score);
@@ -77,6 +80,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public CustomerResponseDto update(Customer customer) {
+
 
         customerRepository.save(customer);
 

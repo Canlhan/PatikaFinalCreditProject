@@ -39,12 +39,19 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
     @Override
     public List<LoanApplicationResponse> getLoanApplicationByCustomerId(Long customerId) {
-        List<LoanApplicationResponse> loanApplicationsByCustomerId=new ArrayList<>();
+        List<LoanApplicationResponse> loanApplicationsByCustomer=new ArrayList<>();
 
-        loanApplicationRepository.findAllByCustomer_CustomerId(customerId).forEach(loanApplication ->
-                        loanApplicationsByCustomerId.add(modelMapper.map(loanApplication,LoanApplicationResponse.class)));
-        log.info("loan application by customer id: "+loanApplicationsByCustomerId);
-        return loanApplicationsByCustomerId;
+        List<LoanApplication> loanApplications=loanApplicationRepository.findAllByCustomer_CustomerId(1L);
+
+        for (LoanApplication loan:loanApplications) {
+            LoanApplicationResponse applicationResponse=modelMapper.map(loan,LoanApplicationResponse.class);
+            loanApplicationsByCustomer.add(applicationResponse);
+        }
+
+
+        log.info("loan application by customer id: "+loanApplicationsByCustomer);
+
+        return loanApplicationsByCustomer;
     }
 
     @Override
@@ -64,6 +71,7 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         LoanApplicationResponse loanApplicationResponse=modelMapper.map(addedLoanApplication,LoanApplicationResponse.class);
 
         customer.setLoanApplications(List.of(loanApplication));
+
 
 
         customerService.update(customer);
@@ -123,8 +131,8 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         if (isCreditValid && customer.getSalary()<5000 ) {
             loanApplication.setApproval(true);
 
-            long quarantee=customer.getQuarantee();
-            if(quarantee!=0){
+            long quarantee=customer.getGuarantee();
+            if(quarantee!=0 ){
                 Long addedAmount=(quarantee*10)/100;
                 Long creditAmount=addedAmount+10_000;
                 loanApplication.setCreditLimit(creditAmount);
@@ -145,8 +153,8 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
         if (isCreditValid &&customerService.isSalaryBetween500And1000(customer.getCustomerId())  ) {
 
             loanApplication.setApproval(true);
-            if(customer.getQuarantee()!=0){
-                long amountOfGuarantee= (customer.getQuarantee()*20)/100+TWENTY_THOUSAND;
+            if(customer.getGuarantee()!=0){
+                long amountOfGuarantee= (customer.getGuarantee()*20)/100+TWENTY_THOUSAND;
                 loanApplication.setCreditLimit(amountOfGuarantee);
             }
             else{
@@ -167,8 +175,8 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
             loanApplication.setApproval(true);
             loanApplication.setCustomer(customer);
             long amountOfCreditLimit=(customer.getSalary()*CREDIT_LIMIT_MULTIPLIER)/2;
-            if(customer.getQuarantee()!=0){
-                long ratioOfGuarantee=(customer.getQuarantee()*25)/100;
+            if(customer.getGuarantee()!=0){
+                long ratioOfGuarantee=(customer.getGuarantee()*25)/100;
                 loanApplication.setCreditLimit(amountOfCreditLimit+ratioOfGuarantee);
             }
             else{
@@ -183,8 +191,8 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
             loanApplication.setApproval(true);
             long limitOfCreditLimit=customer.getSalary()*CREDIT_LIMIT_MULTIPLIER;
 
-            if(customer.getQuarantee()!=0){
-                long ratioOfGuarantee=customer.getQuarantee()*50/100;
+            if(customer.getGuarantee()!=0){
+                long ratioOfGuarantee=customer.getGuarantee()*50/100;
 
                 loanApplication.setCreditLimit(limitOfCreditLimit+ratioOfGuarantee);
             }else{
