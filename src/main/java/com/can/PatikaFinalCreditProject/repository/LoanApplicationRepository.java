@@ -12,5 +12,6 @@ public interface LoanApplicationRepository extends JpaRepository<LoanApplication
 
 
     List<LoanApplication> findAllByCustomer_CustomerId(Long customerId);
+
     List<LoanApplication> findAllByCustomer_IdentifyNoAndCustomer_BirthDate(String identifyNo, LocalDate birthDate);
 }
