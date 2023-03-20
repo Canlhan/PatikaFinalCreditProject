@@ -100,9 +100,9 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public boolean isSalaryOverLimit(Long id, Long limit) {
-        CustomerResponseDto customerResponseDto=get(id);
-        if(customerResponseDto.getSalary()>=limit){
+    public boolean isSalaryOverLimit(Customer customer, Long limit) {
+        double salary=customer.getSalary();
+        if(salary>=limit){
             return true;
         }
         return false;

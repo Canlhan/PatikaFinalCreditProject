@@ -3,9 +3,11 @@ package com.can.PatikaFinalCreditProject.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -64,5 +66,16 @@ public class Customer
     @OneToMany(mappedBy = "customer")
     @JsonBackReference
     private List<LoanApplication> loanApplications;
+
+
+    public boolean isThereGuarantee(){
+
+        Long guarantee=getGuarantee();
+        if(guarantee!=null){
+            return true;
+        }
+        return false;
+
+    }
 
 }

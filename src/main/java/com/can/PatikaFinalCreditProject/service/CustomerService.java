@@ -18,7 +18,7 @@ public interface CustomerService
 
     CustomerResponseDto update(Customer customer);
     boolean isSalaryBetween500And1000(Long id);
-    boolean isSalaryOverLimit(Long id,Long limit);
+    boolean isSalaryOverLimit(Customer customer,Long limit);
 
 
 

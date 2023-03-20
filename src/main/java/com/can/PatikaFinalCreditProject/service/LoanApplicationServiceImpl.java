@@ -6,6 +6,7 @@ import com.can.PatikaFinalCreditProject.entity.CreditScore;
 import com.can.PatikaFinalCreditProject.entity.Customer;
 import com.can.PatikaFinalCreditProject.entity.LoanApplication;
 import com.can.PatikaFinalCreditProject.repository.LoanApplicationRepository;
+import com.can.PatikaFinalCreditProject.utils.CreditScoreValid;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -119,16 +120,22 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
     private void isCreditScoreNotEnough(LoanApplication loanApplication,CreditScore score,Customer customer){
 
-        if(creditScoreService.isCreditScoreLessThanLimit(score,500l)){
+        boolean isCreditEnough=CreditScoreValid.isCreditScoreLessThanLimit(score,500l);
+        if(isCreditEnough){
             loanApplication.setApproval(false);
         }
 
     }
     private void isCreditScoreBetween500And1000AndSalaryLess5000(LoanApplication loanApplication,CreditScore score,Customer customer){
+        /*
         boolean isCreditValid=creditScoreService.isCreditScoreLessThanLimit(score,1_000l)&&
                 creditScoreService.isCreditScoreMoreThanLimit(score,500l);
 
-        if (isCreditValid && customer.getSalary()<5000 ) {
+         */
+        boolean isCreditValid= CreditScoreValid.isCreditBetweenLimits(score,500l,1000l);
+        boolean isSalaryEnough=customerService.isSalaryOverLimit(customer,5000l);
+
+        if (isCreditValid && isSalaryEnough ) {
             loanApplication.setApproval(true);
 
             long quarantee=customer.getGuarantee();
@@ -146,14 +153,16 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
 
     private void isCreditBetween500And1000AndSalaryBetween5000And1000(CreditScore score,LoanApplication loanApplication,
                                                                       Customer customer){
-
+        /*
         boolean isCreditValid=creditScoreService.isCreditScoreLessThanLimit(score,1_000l)&&
                 creditScoreService.isCreditScoreMoreThanLimit(score,500l);
-
+         */
+        boolean isCreditValid= CreditScoreValid.isCreditBetweenLimits(score,500l,1000l);
         if (isCreditValid &&customerService.isSalaryBetween500And1000(customer.getCustomerId())  ) {
 
             loanApplication.setApproval(true);
-            if(customer.getGuarantee()!=0){
+            long quarantee=customer.getGuarantee();
+            if(quarantee!=0){
                 long amountOfGuarantee= (customer.getGuarantee()*20)/100+TWENTY_THOUSAND;
                 loanApplication.setCreditLimit(amountOfGuarantee);
             }
@@ -165,10 +174,13 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
     }
     private void isCreditBetween500And1000AndSalaryMore10_000(Customer customer,CreditScore score,LoanApplication loanApplication){
 
+        /*
         boolean isCreditValid=creditScoreService.isCreditScoreLessThanLimit(score,1_000l)&&
-                creditScoreService.isCreditScoreMoreThanLimit(score,500l);
+                creditScoreService.isCreditScoreMoreThanLimit(score,500l);*/
 
-        boolean isSalaryEnough=customerService.isSalaryOverLimit(customer.getCustomerId(),10_000l);
+        boolean isCreditValid= CreditScoreValid.isCreditBetweenLimits(score,500l,1000l);
+
+        boolean isSalaryEnough=customerService.isSalaryOverLimit(customer,10_000l);
 
         if( isCreditValid && isSalaryEnough)
         {
@@ -186,7 +198,9 @@ public class LoanApplicationServiceImpl implements LoanApplicationService{
     }
 
     private void isCreditScoreMoreOrEqual1_000O(CreditScore creditScore,Customer customer,LoanApplication loanApplication){
-        boolean isCreditMore1_000=creditScoreService.isCreditScoreMoreThanLimit(creditScore,999l);
+
+        boolean isCreditMore1_000=CreditScoreValid.isCreditScoreMoreThanLimit(creditScore,999l);
+
         if(isCreditMore1_000){
             loanApplication.setApproval(true);
             long limitOfCreditLimit=customer.getSalary()*CREDIT_LIMIT_MULTIPLIER;
