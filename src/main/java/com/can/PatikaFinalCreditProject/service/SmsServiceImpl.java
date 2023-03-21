@@ -4,10 +4,15 @@ import com.can.PatikaFinalCreditProject.entity.Customer;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Primary
+@Slf4j
 public class SmsServiceImpl implements SmsService<Object> {
 
 
@@ -17,10 +22,11 @@ public class SmsServiceImpl implements SmsService<Object> {
 
     @Override
     public Object sendNotifications(Object... args) {
+
         Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
         Customer customer = (Customer) args[0];
-
+        log.info("sms gönderildi");
 
         try {
             String telephoneOfCustomer = "+90" + customer.getTelephonNumber();
